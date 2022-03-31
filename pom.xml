@@ -57,7 +57,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>main.java.cww.CWW</mainClass>
+                            <mainClass>cww.CWW</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
