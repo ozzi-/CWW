@@ -1,7 +1,5 @@
 package ui;
 
-import static ui.IconRenderer.renderTrayIconForCurrentWeek;
-
 import java.awt.AWTException;
 import java.awt.Color;
 import java.awt.Image;
@@ -22,6 +20,8 @@ import util.Output;
 
 public class Tray {
 
+  private static int renderedForWeek = -1;
+
   private Tray() {
   }
 
@@ -36,19 +36,23 @@ public class Tray {
     TimerTask task = new TimerTask() {
 
       public void run() {
-        Image trayIconImage = renderTrayIconForCurrentWeek(fontColor);
-        if (trayIcon == null) {
-          trayIcon = new TrayIcon(
-              trayIconImage.getScaledInstance(new TrayIcon(trayIconImage).getSize().width, -1, Image.SCALE_SMOOTH));
-          SwingUtilities.invokeLater(Tray::createAndShowTray);
-        } else {
-          trayIcon.setImage(trayIconImage);
+        int weekNumber = Calendar.getInstance().get(Calendar.WEEK_OF_YEAR);
+        if (renderedForWeek != weekNumber) {
+          renderedForWeek = weekNumber;
+          Image trayIconImage = IconRenderer.getWeekIcon(weekNumber, fontColor);
+          if (trayIcon == null) {
+            trayIcon = new TrayIcon(
+                trayIconImage.getScaledInstance(new TrayIcon(trayIconImage).getSize().width, -1, Image.SCALE_SMOOTH));
+            SwingUtilities.invokeLater(Tray::createAndShowTray);
+          } else {
+            trayIcon.setImage(trayIconImage);
+          }
         }
       }
     };
 
     Timer timer = new Timer();
-    timer.schedule(task, today.getTime(), TimeUnit.MILLISECONDS.convert(1, TimeUnit.DAYS));
+    timer.schedule(task, today.getTime(), TimeUnit.MILLISECONDS.convert(1, TimeUnit.MINUTES));
   }
 
   public static void createAndShowTray() {

@@ -6,7 +6,6 @@ import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
-import java.util.Calendar;
 
 import util.Output;
 
@@ -19,9 +18,6 @@ public class IconRenderer {
   private IconRenderer() {
   }
 
-  public static Image renderTrayIconForCurrentWeek(Color color) {
-    return IconRenderer.getWeekIcon(Calendar.getInstance().get(Calendar.WEEK_OF_YEAR), color);
-  }
 
   public static Image getWeekIcon(int weekNumber, Color fontColor) {
     Output.output("Rendering tray icon for week " + weekNumber);

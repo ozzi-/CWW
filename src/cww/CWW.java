@@ -20,6 +20,7 @@ import it.sauronsoftware.junique.AlreadyLockedException;
 import it.sauronsoftware.junique.JUnique;
 import util.Output;
 
+
 public class CWW {
 
   public static final String APP_NAME = "Calendar Week Widget";
